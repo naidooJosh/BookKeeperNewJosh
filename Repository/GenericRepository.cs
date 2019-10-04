@@ -12,8 +12,8 @@ namespace BookKeeperNewJosh.Repository
 
     {
         DbSet<Tbl_Entity> _dbSet;
-        private BookKeeperEntities2 _DBEntity;
-        public GenericRepository(BookKeeperEntities2 DBEntity)
+        private BookKeeperEntities3 _DBEntity;
+        public GenericRepository(BookKeeperEntities3 DBEntity)
         {
             _DBEntity = DBEntity;
             _dbSet = _DBEntity.Set<Tbl_Entity>();

@@ -8,7 +8,7 @@ namespace BookKeeperNewJosh.Repository
 {
     public class GenericUnitOfWork:IDisposable
     {
-        private BookKeeperEntities2 DBEntity = new BookKeeperEntities2();
+        private BookKeeperEntities3 DBEntity = new BookKeeperEntities3();
         public IRepository<Tbl_EntityType> GetRepositoryInstance<Tbl_EntityType>() where Tbl_EntityType : class
         {
             return new GenericRepository<Tbl_EntityType>(DBEntity);

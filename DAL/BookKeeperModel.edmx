@@ -22,8 +22,8 @@
           <Property Name="condition" Type="int" Nullable="false" />
           <Property Name="title" Type="ntext" Nullable="false" />
           <Property Name="author" Type="ntext" Nullable="false" />
-          <Property Name="studentNumber" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="moduleCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="studentNumber" Type="int" Nullable="false" />
+          <Property Name="moduleKey" Type="int" Nullable="false" />
           <Property Name="photo" Type="varbinary(max)" Nullable="false" />
           <Property Name="description" Type="ntext" Nullable="false" />
           <Property Name="isSold" Type="bit" Nullable="false" />
@@ -37,7 +37,7 @@
           </Key>
           <Property Name="cartID" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="listingID" Type="int" Nullable="false" />
-          <Property Name="studentNo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="studentNo" Type="int" Nullable="false" />
           <Property Name="cartStatusID" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="CartStatus">
@@ -51,7 +51,7 @@
           <Key>
             <PropertyRef Name="departmentID" />
           </Key>
-          <Property Name="departmentID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="departmentID" Type="int" Nullable="false" />
           <Property Name="name" Type="text" Nullable="false" />
         </EntityType>
         <EntityType Name="MemberRole">
@@ -64,8 +64,9 @@
         </EntityType>
         <EntityType Name="Module">
           <Key>
-            <PropertyRef Name="moduleCode" />
+            <PropertyRef Name="moduleKey" />
           </Key>
+          <Property Name="moduleKey" Type="int" Nullable="false" />
           <Property Name="moduleCode" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="name" Type="text" Nullable="false" />
         </EntityType>
@@ -81,7 +82,7 @@
             <PropertyRef Name="shippingDetailID" />
           </Key>
           <Property Name="shippingDetailID" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="studentNo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="studentNo" Type="int" Nullable="false" />
           <Property Name="address" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="city" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="state" Type="varchar" MaxLength="500" Nullable="false" />
@@ -104,15 +105,15 @@
             <PropertyRef Name="studentNo" />
             <PropertyRef Name="departmentID" />
           </Key>
-          <Property Name="studentNo" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="departmentID" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="studentNo" Type="int" Nullable="false" />
+          <Property Name="departmentID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="studentNo" />
           </Key>
-          <Property Name="studentNo" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="fName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="studentNo" Type="int" Nullable="false" />
+          <Property Name="fName" Type="nchar" MaxLength="20" />
           <Property Name="lName" Type="nchar" MaxLength="20" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="isBlacklisted" Type="bit" Nullable="false" />
@@ -122,15 +123,15 @@
           <Property Name="blacklistReason" Type="ntext" />
           <Property Name="appealed" Type="bit" />
         </EntityType>
-        <Association Name="FK_BookListings_Module">
+        <Association Name="FK_BookListings_Module1">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="BookListings" Type="Self.BookListings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Module">
-              <PropertyRef Name="moduleCode" />
+              <PropertyRef Name="moduleKey" />
             </Principal>
             <Dependent Role="BookListings">
-              <PropertyRef Name="moduleCode" />
+              <PropertyRef Name="moduleKey" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -255,7 +256,7 @@
           <EntitySet Name="SlideImage" EntityType="Self.SlideImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDepartments" EntityType="Self.UserDepartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BookListings_Module" Association="Self.FK_BookListings_Module">
+          <AssociationSet Name="FK_BookListings_Module1" Association="Self.FK_BookListings_Module1">
             <End Role="Module" EntitySet="Module" />
             <End Role="BookListings" EntitySet="BookListings" />
           </AssociationSet>
@@ -318,15 +319,15 @@
           <Property Name="condition" Type="Int32" Nullable="false" />
           <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="studentNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="moduleCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="studentNumber" Type="Int32" Nullable="false" />
+          <Property Name="moduleKey" Type="Int32" Nullable="false" />
           <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isSold" Type="Boolean" Nullable="false" />
           <Property Name="isQuickSell" Type="Boolean" Nullable="false" />
           <Property Name="perDrop" Type="Single" />
           <Property Name="duration" Type="Int32" />
-          <NavigationProperty Name="Module" Relationship="Self.FK_BookListings_Module" FromRole="BookListings" ToRole="Module" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_BookListings_Module1" FromRole="BookListings" ToRole="Module" />
           <NavigationProperty Name="User" Relationship="Self.FK_BookListings_Users" FromRole="BookListings" ToRole="Users" />
           <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_BookListings" FromRole="BookListings" ToRole="Cart" />
         </EntityType>
@@ -336,7 +337,7 @@
           </Key>
           <Property Name="cartID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="listingID" Type="Int32" Nullable="false" />
-          <Property Name="studentNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="studentNo" Type="Int32" Nullable="false" />
           <Property Name="cartStatusID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="BookListing" Relationship="Self.FK_Cart_BookListings" FromRole="Cart" ToRole="BookListings" />
           <NavigationProperty Name="CartStatu" Relationship="Self.FK_Cart_CartStatus" FromRole="Cart" ToRole="CartStatus" />
@@ -354,7 +355,7 @@
           <Key>
             <PropertyRef Name="departmentID" />
           </Key>
-          <Property Name="departmentID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="departmentID" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.UserDepartments" FromRole="Departments" ToRole="Users" />
         </EntityType>
@@ -371,11 +372,12 @@
         </EntityType>
         <EntityType Name="Module">
           <Key>
-            <PropertyRef Name="moduleCode" />
+            <PropertyRef Name="moduleKey" />
           </Key>
+          <Property Name="moduleKey" Type="Int32" Nullable="false" />
           <Property Name="moduleCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="BookListings" Relationship="Self.FK_BookListings_Module" FromRole="Module" ToRole="BookListings" />
+          <NavigationProperty Name="BookListings" Relationship="Self.FK_BookListings_Module1" FromRole="Module" ToRole="BookListings" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -390,7 +392,7 @@
             <PropertyRef Name="shippingDetailID" />
           </Key>
           <Property Name="shippingDetailID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="studentNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="studentNo" Type="Int32" Nullable="false" />
           <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="city" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="state" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
@@ -413,8 +415,8 @@
           <Key>
             <PropertyRef Name="studentNo" />
           </Key>
-          <Property Name="studentNo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="fName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="studentNo" Type="Int32" Nullable="false" />
+          <Property Name="fName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="lName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="isBlacklisted" Type="Boolean" Nullable="false" />
@@ -428,15 +430,15 @@
           <NavigationProperty Name="ShippingDetails" Relationship="Self.FK_ShippingDetails_Users" FromRole="Users" ToRole="ShippingDetails" />
           <NavigationProperty Name="Departments" Relationship="Self.UserDepartments" FromRole="Users" ToRole="Departments" />
         </EntityType>
-        <Association Name="FK_BookListings_Module">
+        <Association Name="FK_BookListings_Module1">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
           <End Role="BookListings" Type="Self.BookListing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Module">
-              <PropertyRef Name="moduleCode" />
+              <PropertyRef Name="moduleKey" />
             </Principal>
             <Dependent Role="BookListings">
-              <PropertyRef Name="moduleCode" />
+              <PropertyRef Name="moduleKey" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -528,7 +530,7 @@
           <End Role="Departments" Type="Self.Department" Multiplicity="*" />
           <End Role="Users" Type="Self.User" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="BookKeeperEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BookKeeperEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="BookListings" EntityType="Self.BookListing" />
           <EntitySet Name="Carts" EntityType="Self.Cart" />
@@ -540,7 +542,7 @@
           <EntitySet Name="ShippingDetails" EntityType="Self.ShippingDetail" />
           <EntitySet Name="SlideImages" EntityType="Self.SlideImage" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_BookListings_Module" Association="Self.FK_BookListings_Module">
+          <AssociationSet Name="FK_BookListings_Module1" Association="Self.FK_BookListings_Module1">
             <End Role="Module" EntitySet="Modules" />
             <End Role="BookListings" EntitySet="BookListings" />
           </AssociationSet>
@@ -582,7 +584,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BookKeeperModelStoreContainer" CdmEntityContainer="BookKeeperEntities2">
+        <EntityContainerMapping StorageEntityContainer="BookKeeperModelStoreContainer" CdmEntityContainer="BookKeeperEntities3">
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="BookKeeperModel.Admin">
               <MappingFragment StoreEntitySet="Admins">
@@ -601,7 +603,7 @@
                 <ScalarProperty Name="title" ColumnName="title" />
                 <ScalarProperty Name="author" ColumnName="author" />
                 <ScalarProperty Name="studentNumber" ColumnName="studentNumber" />
-                <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
+                <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
                 <ScalarProperty Name="photo" ColumnName="photo" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="isSold" ColumnName="isSold" />
@@ -649,6 +651,7 @@
           <EntitySetMapping Name="Modules">
             <EntityTypeMapping TypeName="BookKeeperModel.Module">
               <MappingFragment StoreEntitySet="Module">
+                <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
                 <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>

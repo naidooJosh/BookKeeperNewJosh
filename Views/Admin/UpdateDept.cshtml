@@ -1,0 +1,42 @@
+﻿@model BookKeeperNewJosh.Models.DepartmentDetails
+    @{
+        ViewBag.Title = "UpdateDept";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+
+    <h2>Department</h2>
+    <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="#">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item ">Departments</li>
+            <li class="breadcrumb-item active">Add New Department</li>
+        </ol>
+
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fas fa-table"></i>
+                Add New Department
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("UpdateDept", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.HiddenFor(m => m.departmentID)
+                    <div class="form-group">
+                        <label class="control-label">Department Name</label>
+                        @Html.TextBoxFor(m => m.name, new { @class = "form-control", placeholder = "Enter category name", required = "required", autofocuse = "autofocus" })
+                        @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
+                    </div>
+                    <!-- use onclick otherwise you get an error --> <a onclick="window.history.back();" class="btn btn-danger">Cancel</a>
+                    <input type="submit" class="btn btn-primary" value="Save" />
+                }
+
+            </div>
+            </div>
+        </div>
+

@@ -20,7 +20,7 @@ namespace BookKeeperNewJosh.DAL
             this.Users = new HashSet<User>();
         }
     
-        public string departmentID { get; set; }
+        public int departmentID { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
