@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="046b0bd11eec48e695274ca6ef908555" Name="Diagram1">
+        <EntityTypeShape EntityType="BookKeeperModel.Admin" Width="1.5" PointX="7.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.BookListing" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.Cart" Width="1.5" PointX="7.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.CartStatu" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.Department" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.MemberRole" Width="1.5" PointX="10" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.Module" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.Role" Width="1.5" PointX="7.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.ShippingDetail" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.SlideImage" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookKeeperModel.User" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="BookKeeperModel.FK_BookListings_Module" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_BookListings_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_Cart_BookListings" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_Cart_CartStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_Cart_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_MemberRole_MemberRole" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_MemberRole_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.FK_ShippingDetails_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BookKeeperModel.UserDepartments" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
