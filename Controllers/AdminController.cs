@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BookKeeperNewJosh.DAL;
 
 namespace BookKeeperNewJosh.Controllers
 {
@@ -21,7 +22,8 @@ namespace BookKeeperNewJosh.Controllers
         //* NB PLZ right click the lightbulb of the underlined List, and click "using BookKeeperDAL;"
         public ActionResult Module()
         {
-            List<Tbl_Module> allModules = _unitOfWork.GetRepositoryInstance<Tbl_Module>().GetAllRecordsIQueryable().Where(i => i.IsDelete == false).ToList();
+            List<Module> allModules = _unitOfWork.GetRepositoryInstance<Module>().GetAllRecordsIQueryable().Where(i => i. == false).ToList();
+            return View(allModules);
         }
     }
 }

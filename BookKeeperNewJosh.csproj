@@ -2065,6 +2065,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AdminLayOut.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\Module.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
