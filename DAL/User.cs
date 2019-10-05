@@ -23,7 +23,7 @@ namespace BookKeeperNewJosh.DAL
             this.Departments = new HashSet<Department>();
         }
     
-        public string studentNo { get; set; }
+        public int studentNo { get; set; }
         public string fName { get; set; }
         public string lName { get; set; }
         public string password { get; set; }

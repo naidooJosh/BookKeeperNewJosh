@@ -20,6 +20,7 @@ namespace BookKeeperNewJosh.DAL
             this.BookListings = new HashSet<BookListing>();
         }
     
+        public int moduleKey { get; set; }
         public string moduleCode { get; set; }
         public string name { get; set; }
     

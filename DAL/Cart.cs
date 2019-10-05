@@ -16,7 +16,7 @@ namespace BookKeeperNewJosh.DAL
     {
         public string cartID { get; set; }
         public int listingID { get; set; }
-        public string studentNo { get; set; }
+        public int studentNo { get; set; }
         public string cartStatusID { get; set; }
     
         public virtual BookListing BookListing { get; set; }

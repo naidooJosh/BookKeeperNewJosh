@@ -15,7 +15,7 @@ namespace BookKeeperNewJosh.DAL
     public partial class ShippingDetail
     {
         public string shippingDetailID { get; set; }
-        public string studentNo { get; set; }
+        public int studentNo { get; set; }
         public string address { get; set; }
         public string city { get; set; }
         public string state { get; set; }

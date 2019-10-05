@@ -13,10 +13,10 @@ namespace BookKeeperNewJosh.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BookKeeperEntities2 : DbContext
+    public partial class BookKeeperEntities3 : DbContext
     {
-        public BookKeeperEntities2()
-            : base("name=BookKeeperEntities2")
+        public BookKeeperEntities3()
+            : base("name=BookKeeperEntities3")
         {
         }
     

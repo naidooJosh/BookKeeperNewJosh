@@ -26,8 +26,8 @@ namespace BookKeeperNewJosh.DAL
         public int condition { get; set; }
         public string title { get; set; }
         public string author { get; set; }
-        public string studentNumber { get; set; }
-        public string moduleCode { get; set; }
+        public int studentNumber { get; set; }
+        public int moduleKey { get; set; }
         public byte[] photo { get; set; }
         public string description { get; set; }
         public bool isSold { get; set; }
