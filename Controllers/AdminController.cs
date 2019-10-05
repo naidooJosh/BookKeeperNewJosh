@@ -22,7 +22,7 @@ namespace BookKeeperNewJosh.Controllers
         //* NB PLZ right click the lightbulb of the underlined List, and click "using BookKeeperDAL;"
         public ActionResult Module()
         {
-            List<Module> allModules = _unitOfWork.GetRepositoryInstance<Module>().GetAllRecordsIQueryable().Where(i => i. == false).ToList();
+            List<Module> allModules = _unitOfWork.GetRepositoryInstance<Module>().GetAllRecordsIQueryable().ToList();
             return View(allModules);
         }
     }
