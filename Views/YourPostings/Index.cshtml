@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BookKeeperNewJosh.DAL.BookListing>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.listedPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.soldPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.condition)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.author)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.photo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isSold)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isQuickSell)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.perDrop)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.duration)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Module.moduleCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.fName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.listedPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.soldPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.condition)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.author)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.photo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isSold)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isQuickSell)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.perDrop)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.duration)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Module.moduleCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.fName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.listingID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.listingID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.listingID })
+        </td>
+    </tr>
+}
+
+</table>

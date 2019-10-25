@@ -236,6 +236,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PostProduct.cs" />
     <Compile Include="Models\Shopping.cs" />
+    <Compile Include="Models\YourPostings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\GenericUnitOfWork.cs" />
@@ -2077,6 +2078,11 @@
     <Content Include="Views\PostBook\PostProduct.cshtml" />
     <Content Include="Views\DeletePost\DeletePost.cshtml" />
     <Content Include="Views\EditPost\EditPost.cshtml" />
+    <Content Include="Views\YourPostings\Create.cshtml" />
+    <Content Include="Views\YourPostings\Delete.cshtml" />
+    <Content Include="Views\YourPostings\Details.cshtml" />
+    <Content Include="Views\YourPostings\Edit.cshtml" />
+    <Content Include="Views\YourPostings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

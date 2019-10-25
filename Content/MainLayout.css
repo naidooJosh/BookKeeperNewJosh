@@ -62,7 +62,7 @@ h6 {
 
 .account {
    text-align: right;
-   float:right;
+   float: right;
 }
 
 .account a {
@@ -85,7 +85,7 @@ h6 {
 .account ul {
       list-style-type: none;
       margin-left: -20px;
-      float: right;
+      float: left;
 }
 
 .account ul > li {
