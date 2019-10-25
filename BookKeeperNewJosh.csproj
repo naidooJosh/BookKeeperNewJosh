@@ -173,6 +173,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ModulesViewController.cs" />
     <Compile Include="DAL\Admin.cs">
       <DependentUpon>BookKeeperModel.tt</DependentUpon>
     </Compile>
@@ -2074,9 +2075,15 @@
     <Content Include="Views\YourPostings\Details.cshtml" />
     <Content Include="Views\YourPostings\Edit.cshtml" />
     <Content Include="Views\YourPostings\Index.cshtml" />
+    <Content Include="Views\ModulesView\Create.cshtml" />
+    <Content Include="Views\ModulesView\Delete.cshtml" />
+    <Content Include="Views\ModulesView\Details.cshtml" />
+    <Content Include="Views\ModulesView\Edit.cshtml" />
+    <Content Include="Views\ModulesView\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
