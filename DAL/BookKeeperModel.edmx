@@ -325,7 +325,7 @@
           <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="isSold" Type="Boolean" Nullable="false" />
           <Property Name="isQuickSell" Type="Boolean" Nullable="false" />
-          <Property Name="perDrop" Type="Single" />
+          <Property Name="perDrop" Type="Int32" />
           <Property Name="duration" Type="Int32" />
           <NavigationProperty Name="Module" Relationship="Self.FK_BookListings_Module1" FromRole="BookListings" ToRole="Module" />
           <NavigationProperty Name="User" Relationship="Self.FK_BookListings_Users" FromRole="BookListings" ToRole="Users" />
