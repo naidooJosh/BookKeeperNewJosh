@@ -1,0 +1,82 @@
+﻿@model IEnumerable<BookKeeperNewJosh.DAL.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isBlacklisted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.totalrating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ratingcount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.blacklistReason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.appealed)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.lName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isBlacklisted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.totalrating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ratingcount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.blacklistReason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.appealed)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.studentNo }) |
+            @Html.ActionLink("Details", "Details", new { id=item.studentNo }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.studentNo })
+        </td>
+    </tr>
+}
+
+</table>

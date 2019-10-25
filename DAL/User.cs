@@ -33,6 +33,14 @@ namespace BookKeeperNewJosh.DAL
         public int ratingcount { get; set; }
         public string blacklistReason { get; set; }
         public Nullable<bool> appealed { get; set; }
+        public string appealReason { get; set; }
+        public Nullable<bool> reported { get; set; }
+        public string reportReason { get; set; }
+        public float realRating { 
+            get {
+                if (this.ratingcount == 0) return 0; else return totalrating / ratingcount;
+                        } }
+
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookListing> BookListings { get; set; }

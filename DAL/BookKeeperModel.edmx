@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookKeeperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookKeeperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admins">
           <Key>
             <PropertyRef Name="userName" />
@@ -20,18 +20,18 @@
           <Property Name="listedPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="soldPrice" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="condition" Type="int" Nullable="false" />
-          <Property Name="title" Type="ntext" Nullable="false" />
-          <Property Name="author" Type="ntext" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="author" Type="nvarchar(max)" Nullable="false" />
           <Property Name="studentNumber" Type="int" Nullable="false" />
           <Property Name="moduleKey" Type="int" Nullable="false" />
           <Property Name="photo" Type="varbinary(max)" Nullable="false" />
-          <Property Name="description" Type="ntext" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="isSold" Type="bit" Nullable="false" />
           <Property Name="isQuickSell" Type="bit" Nullable="false" />
           <Property Name="perDrop" Type="real" />
           <Property Name="duration" Type="int" />
         </EntityType>
-        <EntityType Name="Cart">
+        <EntityType Name="Carts">
           <Key>
             <PropertyRef Name="cartID" />
           </Key>
@@ -52,9 +52,9 @@
             <PropertyRef Name="departmentID" />
           </Key>
           <Property Name="departmentID" Type="int" Nullable="false" />
-          <Property Name="name" Type="text" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="MemberRole">
+        <EntityType Name="MemberRoles">
           <Key>
             <PropertyRef Name="memberRoleID" />
           </Key>
@@ -62,13 +62,13 @@
           <Property Name="studentNo" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="roleID" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <EntityType Name="Module">
+        <EntityType Name="Modules">
           <Key>
             <PropertyRef Name="moduleKey" />
           </Key>
           <Property Name="moduleKey" Type="int" Nullable="false" />
           <Property Name="moduleCode" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="name" Type="text" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -92,21 +92,21 @@
           <Property Name="amountPaid" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="paymentType" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="SlideImage">
+        <EntityType Name="SlideImages">
           <Key>
             <PropertyRef Name="slideID" />
           </Key>
           <Property Name="slideID" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="slideTitle" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="slideImage" Type="varbinary(max)" Nullable="false" />
+          <Property Name="slideImage1" Type="varbinary(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="UserDepartments">
           <Key>
-            <PropertyRef Name="studentNo" />
-            <PropertyRef Name="departmentID" />
+            <PropertyRef Name="Departments_departmentID" />
+            <PropertyRef Name="Users_studentNo" />
           </Key>
-          <Property Name="studentNo" Type="int" Nullable="false" />
-          <Property Name="departmentID" Type="int" Nullable="false" />
+          <Property Name="Departments_departmentID" Type="int" Nullable="false" />
+          <Property Name="Users_studentNo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -120,14 +120,17 @@
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="totalrating" Type="int" Nullable="false" />
           <Property Name="ratingcount" Type="int" Nullable="false" />
-          <Property Name="blacklistReason" Type="ntext" />
+          <Property Name="blacklistReason" Type="nvarchar(max)" />
           <Property Name="appealed" Type="bit" />
+          <Property Name="appealReason" Type="nvarchar(max)" />
+          <Property Name="reported" Type="bit" />
+          <Property Name="reportReason" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_BookListings_Module1">
-          <End Role="Module" Type="Self.Module" Multiplicity="1" />
+          <End Role="Modules" Type="Self.Modules" Multiplicity="1" />
           <End Role="BookListings" Type="Self.BookListings" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Module">
+            <Principal Role="Modules">
               <PropertyRef Name="moduleKey" />
             </Principal>
             <Dependent Role="BookListings">
@@ -149,60 +152,60 @@
         </Association>
         <Association Name="FK_Cart_BookListings">
           <End Role="BookListings" Type="Self.BookListings" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BookListings">
               <PropertyRef Name="listingID" />
             </Principal>
-            <Dependent Role="Cart">
+            <Dependent Role="Carts">
               <PropertyRef Name="listingID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cart_CartStatus">
           <End Role="CartStatus" Type="Self.CartStatus" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CartStatus">
               <PropertyRef Name="cartStatusID" />
             </Principal>
-            <Dependent Role="Cart">
+            <Dependent Role="Carts">
               <PropertyRef Name="cartStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Cart_Users">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <End Role="Carts" Type="Self.Carts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="studentNo" />
             </Principal>
-            <Dependent Role="Cart">
+            <Dependent Role="Carts">
               <PropertyRef Name="studentNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MemberRole_MemberRole">
-          <End Role="MemberRole" Type="Self.MemberRole" Multiplicity="1" />
-          <End Role="MemberRole1" Type="Self.MemberRole" Multiplicity="0..1" />
+          <End Role="MemberRoles" Type="Self.MemberRoles" Multiplicity="1" />
+          <End Role="MemberRoles1" Type="Self.MemberRoles" Multiplicity="0..1" />
           <ReferentialConstraint>
-            <Principal Role="MemberRole">
+            <Principal Role="MemberRoles">
               <PropertyRef Name="memberRoleID" />
             </Principal>
-            <Dependent Role="MemberRole1">
+            <Dependent Role="MemberRoles1">
               <PropertyRef Name="memberRoleID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MemberRole_Roles">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
-          <End Role="MemberRole" Type="Self.MemberRole" Multiplicity="*" />
+          <End Role="MemberRoles" Type="Self.MemberRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="RoleId" />
             </Principal>
-            <Dependent Role="MemberRole">
+            <Dependent Role="MemberRoles">
               <PropertyRef Name="roleID" />
             </Dependent>
           </ReferentialConstraint>
@@ -227,7 +230,7 @@
               <PropertyRef Name="departmentID" />
             </Principal>
             <Dependent Role="UserDepartments">
-              <PropertyRef Name="departmentID" />
+              <PropertyRef Name="Departments_departmentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -239,25 +242,25 @@
               <PropertyRef Name="studentNo" />
             </Principal>
             <Dependent Role="UserDepartments">
-              <PropertyRef Name="studentNo" />
+              <PropertyRef Name="Users_studentNo" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="BookKeeperModelStoreContainer">
           <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookListings" EntityType="Self.BookListings" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Carts" EntityType="Self.Carts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CartStatus" EntityType="Self.CartStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MemberRole" EntityType="Self.MemberRole" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Module" EntityType="Self.Module" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberRoles" EntityType="Self.MemberRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingDetails" EntityType="Self.ShippingDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SlideImage" EntityType="Self.SlideImage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SlideImages" EntityType="Self.SlideImages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDepartments" EntityType="Self.UserDepartments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BookListings_Module1" Association="Self.FK_BookListings_Module1">
-            <End Role="Module" EntitySet="Module" />
+            <End Role="Modules" EntitySet="Modules" />
             <End Role="BookListings" EntitySet="BookListings" />
           </AssociationSet>
           <AssociationSet Name="FK_BookListings_Users" Association="Self.FK_BookListings_Users">
@@ -266,23 +269,23 @@
           </AssociationSet>
           <AssociationSet Name="FK_Cart_BookListings" Association="Self.FK_Cart_BookListings">
             <End Role="BookListings" EntitySet="BookListings" />
-            <End Role="Cart" EntitySet="Cart" />
+            <End Role="Carts" EntitySet="Carts" />
           </AssociationSet>
           <AssociationSet Name="FK_Cart_CartStatus" Association="Self.FK_Cart_CartStatus">
             <End Role="CartStatus" EntitySet="CartStatus" />
-            <End Role="Cart" EntitySet="Cart" />
+            <End Role="Carts" EntitySet="Carts" />
           </AssociationSet>
           <AssociationSet Name="FK_Cart_Users" Association="Self.FK_Cart_Users">
             <End Role="Users" EntitySet="Users" />
-            <End Role="Cart" EntitySet="Cart" />
+            <End Role="Carts" EntitySet="Carts" />
           </AssociationSet>
           <AssociationSet Name="FK_MemberRole_MemberRole" Association="Self.FK_MemberRole_MemberRole">
-            <End Role="MemberRole" EntitySet="MemberRole" />
-            <End Role="MemberRole1" EntitySet="MemberRole" />
+            <End Role="MemberRoles" EntitySet="MemberRoles" />
+            <End Role="MemberRoles1" EntitySet="MemberRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_MemberRole_Roles" Association="Self.FK_MemberRole_Roles">
             <End Role="Roles" EntitySet="Roles" />
-            <End Role="MemberRole" EntitySet="MemberRole" />
+            <End Role="MemberRoles" EntitySet="MemberRoles" />
           </AssociationSet>
           <AssociationSet Name="FK_ShippingDetails_Users" Association="Self.FK_ShippingDetails_Users">
             <End Role="Users" EntitySet="Users" />
@@ -297,8 +300,7 @@
             <End Role="UserDepartments" EntitySet="UserDepartments" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookKeeperModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -429,6 +431,9 @@
           <NavigationProperty Name="Carts" Relationship="Self.FK_Cart_Users" FromRole="Users" ToRole="Cart" />
           <NavigationProperty Name="ShippingDetails" Relationship="Self.FK_ShippingDetails_Users" FromRole="Users" ToRole="ShippingDetails" />
           <NavigationProperty Name="Departments" Relationship="Self.UserDepartments" FromRole="Users" ToRole="Departments" />
+          <Property Name="appealReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="reported" Type="Boolean" />
+          <Property Name="reportReason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_BookListings_Module1">
           <End Role="Module" Type="Self.Module" Multiplicity="1" />
@@ -583,140 +588,142 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BookKeeperModelStoreContainer" CdmEntityContainer="BookKeeperEntities3">
-          <EntitySetMapping Name="Admins">
-            <EntityTypeMapping TypeName="BookKeeperModel.Admin">
-              <MappingFragment StoreEntitySet="Admins">
-                <ScalarProperty Name="userName" ColumnName="userName" />
-                <ScalarProperty Name="password" ColumnName="password" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BookListings">
-            <EntityTypeMapping TypeName="BookKeeperModel.BookListing">
-              <MappingFragment StoreEntitySet="BookListings">
-                <ScalarProperty Name="listingID" ColumnName="listingID" />
-                <ScalarProperty Name="listedPrice" ColumnName="listedPrice" />
-                <ScalarProperty Name="soldPrice" ColumnName="soldPrice" />
-                <ScalarProperty Name="condition" ColumnName="condition" />
-                <ScalarProperty Name="title" ColumnName="title" />
-                <ScalarProperty Name="author" ColumnName="author" />
-                <ScalarProperty Name="studentNumber" ColumnName="studentNumber" />
-                <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
-                <ScalarProperty Name="photo" ColumnName="photo" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="isSold" ColumnName="isSold" />
-                <ScalarProperty Name="isQuickSell" ColumnName="isQuickSell" />
-                <ScalarProperty Name="perDrop" ColumnName="perDrop" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="BookKeeperModel.Cart">
-              <MappingFragment StoreEntitySet="Cart">
-                <ScalarProperty Name="cartID" ColumnName="cartID" />
-                <ScalarProperty Name="listingID" ColumnName="listingID" />
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BookKeeperModelStoreContainer" CdmEntityContainer="BookKeeperEntities3">
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.Admin)">
+        <MappingFragment StoreEntitySet="Admins">
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookListings">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.BookListing)">
+        <MappingFragment StoreEntitySet="BookListings">
+          <ScalarProperty Name="listingID" ColumnName="listingID" />
+          <ScalarProperty Name="listedPrice" ColumnName="listedPrice" />
+          <ScalarProperty Name="soldPrice" ColumnName="soldPrice" />
+          <ScalarProperty Name="condition" ColumnName="condition" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="author" ColumnName="author" />
+          <ScalarProperty Name="studentNumber" ColumnName="studentNumber" />
+          <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="isSold" ColumnName="isSold" />
+          <ScalarProperty Name="isQuickSell" ColumnName="isQuickSell" />
+          <ScalarProperty Name="perDrop" ColumnName="perDrop" />
+          <ScalarProperty Name="duration" ColumnName="duration" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Carts">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.Cart)">
+        <MappingFragment StoreEntitySet="Carts">
+          <ScalarProperty Name="cartID" ColumnName="cartID" />
+          <ScalarProperty Name="listingID" ColumnName="listingID" />
+          <ScalarProperty Name="studentNo" ColumnName="studentNo" />
+          <ScalarProperty Name="cartStatusID" ColumnName="cartStatusID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CartStatus">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.CartStatu)">
+        <MappingFragment StoreEntitySet="CartStatus">
+          <ScalarProperty Name="cartStatusID" ColumnName="cartStatusID" />
+          <ScalarProperty Name="cartStatus" ColumnName="cartStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Departments">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.Department)">
+        <MappingFragment StoreEntitySet="Departments">
+          <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MemberRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.MemberRole)">
+        <MappingFragment StoreEntitySet="MemberRoles">
+          <ScalarProperty Name="memberRoleID" ColumnName="memberRoleID" />
+          <ScalarProperty Name="studentNo" ColumnName="studentNo" />
+          <ScalarProperty Name="roleID" ColumnName="roleID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modules">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.Module)">
+        <MappingFragment StoreEntitySet="Modules">
+          <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
+          <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShippingDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.ShippingDetail)">
+        <MappingFragment StoreEntitySet="ShippingDetails">
+          <ScalarProperty Name="shippingDetailID" ColumnName="shippingDetailID" />
+          <ScalarProperty Name="studentNo" ColumnName="studentNo" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+          <ScalarProperty Name="orderID" ColumnName="orderID" />
+          <ScalarProperty Name="amountPaid" ColumnName="amountPaid" />
+          <ScalarProperty Name="paymentType" ColumnName="paymentType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SlideImages">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.SlideImage)">
+        <MappingFragment StoreEntitySet="SlideImages">
+          <ScalarProperty Name="slideID" ColumnName="slideID" />
+          <ScalarProperty Name="slideTitle" ColumnName="slideTitle" />
+          <ScalarProperty Name="slideImage1" ColumnName="slideImage1" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(BookKeeperModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="reportReason" ColumnName="reportReason" />
+                <ScalarProperty Name="reported" ColumnName="reported" />
+                <ScalarProperty Name="appealReason" ColumnName="appealReason" />
                 <ScalarProperty Name="studentNo" ColumnName="studentNo" />
-                <ScalarProperty Name="cartStatusID" ColumnName="cartStatusID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CartStatus">
-            <EntityTypeMapping TypeName="BookKeeperModel.CartStatu">
-              <MappingFragment StoreEntitySet="CartStatus">
-                <ScalarProperty Name="cartStatusID" ColumnName="cartStatusID" />
-                <ScalarProperty Name="cartStatus" ColumnName="cartStatus" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="BookKeeperModel.Department">
-              <MappingFragment StoreEntitySet="Departments">
-                <ScalarProperty Name="departmentID" ColumnName="departmentID" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MemberRoles">
-            <EntityTypeMapping TypeName="BookKeeperModel.MemberRole">
-              <MappingFragment StoreEntitySet="MemberRole">
-                <ScalarProperty Name="memberRoleID" ColumnName="memberRoleID" />
-                <ScalarProperty Name="studentNo" ColumnName="studentNo" />
-                <ScalarProperty Name="roleID" ColumnName="roleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Modules">
-            <EntityTypeMapping TypeName="BookKeeperModel.Module">
-              <MappingFragment StoreEntitySet="Module">
-                <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
-                <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="BookKeeperModel.Role">
-              <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShippingDetails">
-            <EntityTypeMapping TypeName="BookKeeperModel.ShippingDetail">
-              <MappingFragment StoreEntitySet="ShippingDetails">
-                <ScalarProperty Name="shippingDetailID" ColumnName="shippingDetailID" />
-                <ScalarProperty Name="studentNo" ColumnName="studentNo" />
-                <ScalarProperty Name="address" ColumnName="address" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
-                <ScalarProperty Name="orderID" ColumnName="orderID" />
-                <ScalarProperty Name="amountPaid" ColumnName="amountPaid" />
-                <ScalarProperty Name="paymentType" ColumnName="paymentType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SlideImages">
-            <EntityTypeMapping TypeName="BookKeeperModel.SlideImage">
-              <MappingFragment StoreEntitySet="SlideImage">
-                <ScalarProperty Name="slideID" ColumnName="slideID" />
-                <ScalarProperty Name="slideTitle" ColumnName="slideTitle" />
-                <ScalarProperty Name="slideImage1" ColumnName="slideImage" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="BookKeeperModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="studentNo" ColumnName="studentNo" />
-                <ScalarProperty Name="fName" ColumnName="fName" />
-                <ScalarProperty Name="lName" ColumnName="lName" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="isBlacklisted" ColumnName="isBlacklisted" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="totalrating" ColumnName="totalrating" />
-                <ScalarProperty Name="ratingcount" ColumnName="ratingcount" />
-                <ScalarProperty Name="blacklistReason" ColumnName="blacklistReason" />
-                <ScalarProperty Name="appealed" ColumnName="appealed" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="UserDepartments" TypeName="BookKeeperModel.UserDepartments" StoreEntitySet="UserDepartments">
-            <EndProperty Name="Departments">
-              <ScalarProperty Name="departmentID" ColumnName="departmentID" />
-            </EndProperty>
-            <EndProperty Name="Users">
-              <ScalarProperty Name="studentNo" ColumnName="studentNo" />
-            </EndProperty>
-          </AssociationSetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+          <ScalarProperty Name="fName" ColumnName="fName" />
+          <ScalarProperty Name="lName" ColumnName="lName" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="isBlacklisted" ColumnName="isBlacklisted" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="totalrating" ColumnName="totalrating" />
+          <ScalarProperty Name="ratingcount" ColumnName="ratingcount" />
+          <ScalarProperty Name="blacklistReason" ColumnName="blacklistReason" />
+          <ScalarProperty Name="appealed" ColumnName="appealed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserDepartments" TypeName="BookKeeperModel.UserDepartments" StoreEntitySet="UserDepartments">
+      <EndProperty Name="Departments">
+        <ScalarProperty Name="departmentID" ColumnName="Departments_departmentID" />
+      </EndProperty>
+      <EndProperty Name="Users">
+        <ScalarProperty Name="studentNo" ColumnName="Users_studentNo" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -730,7 +737,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
