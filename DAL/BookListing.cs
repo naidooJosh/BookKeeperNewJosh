@@ -32,7 +32,7 @@ namespace BookKeeperNewJosh.DAL
         public string description { get; set; }
         public bool isSold { get; set; }
         public bool isQuickSell { get; set; }
-        public Nullable<float> perDrop { get; set; }
+        public Nullable<int> perDrop { get; set; }
         public Nullable<int> duration { get; set; }
     
         public virtual Module Module { get; set; }
