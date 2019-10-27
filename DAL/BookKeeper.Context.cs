@@ -13,10 +13,10 @@ namespace BookKeeperNewJosh.DAL
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BookKeeperEntities3 : DbContext
+    public partial class BookKeeperEntities : DbContext
     {
-        public BookKeeperEntities3()
-            : base("name=BookKeeperEntities3")
+        public BookKeeperEntities()
+            : base("name=BookKeeperEntities")
         {
         }
     
@@ -27,14 +27,8 @@ namespace BookKeeperNewJosh.DAL
     
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<BookListing> BookListings { get; set; }
-        public virtual DbSet<Cart> Carts { get; set; }
-        public virtual DbSet<CartStatu> CartStatus { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<MemberRole> MemberRoles { get; set; }
         public virtual DbSet<Module> Modules { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<ShippingDetail> ShippingDetails { get; set; }
-        public virtual DbSet<SlideImage> SlideImages { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }
 }

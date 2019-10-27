@@ -11,18 +11,17 @@ namespace BookKeeperNewJosh.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
             this.BookListings = new HashSet<BookListing>();
-            this.Carts = new HashSet<Cart>();
-            this.ShippingDetails = new HashSet<ShippingDetail>();
             this.Departments = new HashSet<Department>();
         }
-    
+        [Key]
         public int studentNo { get; set; }
         public string fName { get; set; }
         public string lName { get; set; }
@@ -36,18 +35,11 @@ namespace BookKeeperNewJosh.DAL
         public string appealReason { get; set; }
         public Nullable<bool> reported { get; set; }
         public string reportReason { get; set; }
-        public float realRating { 
-            get {
-                if (this.ratingcount == 0) return 0; else return totalrating / ratingcount;
-                        } }
 
+        public float realRating { get { if (ratingcount == 0) return 5; else return totalrating / ratingcount; } }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookListing> BookListings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ShippingDetail> ShippingDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }
     }

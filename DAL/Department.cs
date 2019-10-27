@@ -11,7 +11,7 @@ namespace BookKeeperNewJosh.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Department
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,7 +19,7 @@ namespace BookKeeperNewJosh.DAL
         {
             this.Users = new HashSet<User>();
         }
-    
+        [Key]
         public int departmentID { get; set; }
         public string name { get; set; }
     

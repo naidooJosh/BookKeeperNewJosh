@@ -11,15 +11,10 @@ namespace BookKeeperNewJosh.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class BookListing
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BookListing()
-        {
-            this.Carts = new HashSet<Cart>();
-        }
-    
+        [Key]
         public int listingID { get; set; }
         public decimal listedPrice { get; set; }
         public decimal soldPrice { get; set; }
@@ -34,10 +29,9 @@ namespace BookKeeperNewJosh.DAL
         public bool isQuickSell { get; set; }
         public Nullable<float> perDrop { get; set; }
         public Nullable<int> duration { get; set; }
+        public Nullable<decimal> limitedPrice { get; set; }
     
         public virtual Module Module { get; set; }
         public virtual User User { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

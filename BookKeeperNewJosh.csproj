@@ -174,67 +174,52 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AccountSignInController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
+    <Compile Include="Controllers\ViewProfileController.cs" />
+    <Compile Include="Crypto.cs" />
     <Compile Include="DAL\Admin.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
+      <DependentUpon>BookKeeper.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\BookKeeperModel.Context.cs">
+    <Compile Include="DAL\BookKeeper.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BookKeeperModel.Context.tt</DependentUpon>
+      <DependentUpon>BookKeeper.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\BookKeeperModel.cs">
+    <Compile Include="DAL\BookKeeper.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
+      <DependentUpon>BookKeeper.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\BookKeeperModel.Designer.cs">
+    <Compile Include="DAL\BookKeeper.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BookKeeperModel.edmx</DependentUpon>
+      <DependentUpon>BookKeeper.edmx</DependentUpon>
     </Compile>
     <Compile Include="DAL\BookListing.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Cart.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\CartStatu.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
+      <DependentUpon>BookKeeper.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Department.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\MemberRole.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
+      <DependentUpon>BookKeeper.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\Module.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\Role.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\ShippingDetail.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\SlideImage.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
+      <DependentUpon>BookKeeper.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\User.cs">
-      <DependentUpon>BookKeeperModel.tt</DependentUpon>
+      <DependentUpon>BookKeeper.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminRankingData.cs" />
     <Compile Include="Models\BookListingDetails.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Shopping.cs" />
+    <Compile Include="Models\UserProfileEdit.cs" />
+    <Compile Include="Models\UserSignIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\GenericUnitOfWork.cs" />
@@ -1846,16 +1831,15 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\MainLayout.css" />
-    <Content Include="DAL\BookKeeperModel.Context.tt">
+    <Content Include="DAL\BookKeeper.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookKeeperModel.edmx</DependentUpon>
-      <LastGenOutput>BookKeeperModel.Context.cs</LastGenOutput>
+      <DependentUpon>BookKeeper.edmx</DependentUpon>
+      <LastGenOutput>BookKeeper.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DAL\BookKeeperModel.edmx.sql" />
-    <Content Include="DAL\BookKeeperModel.tt">
+    <Content Include="DAL\BookKeeper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>BookKeeperModel.edmx</DependentUpon>
-      <LastGenOutput>BookKeeperModel.cs</LastGenOutput>
+      <DependentUpon>BookKeeper.edmx</DependentUpon>
+      <LastGenOutput>BookKeeper.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -2018,12 +2002,12 @@
     <Content Include="AdminStyle\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="AdminStyle\vendor\jquery\jquery.min.map" />
     <Content Include="AdminStyle\vendor\jquery\jquery.slim.min.map" />
-    <EntityDeploy Include="DAL\BookKeeperModel.edmx">
+    <EntityDeploy Include="DAL\BookKeeper.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>BookKeeperModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>BookKeeper.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DAL\BookKeeperModel.edmx.diagram">
-      <DependentUpon>BookKeeperModel.edmx</DependentUpon>
+    <Content Include="DAL\BookKeeper.edmx.diagram">
+      <DependentUpon>BookKeeper.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -2036,6 +2020,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="UserSignInStyle\css\UserSignIn.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2077,10 +2062,16 @@
     <Content Include="Views\Admin\displayReported.cshtml" />
     <Content Include="Views\Admin\displayRanking.cshtml" />
     <Content Include="Views\Admin\blacklistUser.cshtml" />
+    <Content Include="Views\AccountSignIn\Registration.cshtml" />
+    <Content Include="Views\AccountSignIn\Login.cshtml" />
+    <Content Include="Views\Shared\_UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Repository\DataRepos\" />
+    <Folder Include="UserProfileStyle\" />
+    <Folder Include="Views\UserProfile\" />
+    <Folder Include="Views\ViewProfile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

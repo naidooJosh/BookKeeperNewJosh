@@ -12,7 +12,7 @@ namespace BookKeeperNewJosh.Controllers
     public class AdminController : Controller
     {
         private readonly GenericUnitOfWork unitofwork = new GenericUnitOfWork();
-        BookKeeperEntities3 context = new BookKeeperEntities3();
+        BookKeeperEntities context = new BookKeeperEntities();
         // GET: Admin
         public ActionResult Index()
         {

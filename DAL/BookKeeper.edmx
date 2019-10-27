@@ -1,0 +1,368 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookKeeperModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admins">
+          <Key>
+            <PropertyRef Name="userName" />
+          </Key>
+          <Property Name="userName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookListings">
+          <Key>
+            <PropertyRef Name="listingID" />
+          </Key>
+          <Property Name="listingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="listedPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="soldPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="condition" Type="int" Nullable="false" />
+          <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="author" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="studentNumber" Type="int" Nullable="false" />
+          <Property Name="moduleKey" Type="int" Nullable="false" />
+          <Property Name="photo" Type="varbinary(max)" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="isSold" Type="bit" Nullable="false" />
+          <Property Name="isQuickSell" Type="bit" Nullable="false" />
+          <Property Name="perDrop" Type="real" />
+          <Property Name="duration" Type="int" />
+          <Property Name="limitedPrice" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Departments">
+          <Key>
+            <PropertyRef Name="departmentID" />
+          </Key>
+          <Property Name="departmentID" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modules">
+          <Key>
+            <PropertyRef Name="moduleKey" />
+          </Key>
+          <Property Name="moduleKey" Type="int" Nullable="false" />
+          <Property Name="moduleCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserDepartments">
+          <Key>
+            <PropertyRef Name="Departments_departmentID" />
+            <PropertyRef Name="Users_studentNo" />
+          </Key>
+          <Property Name="Departments_departmentID" Type="int" Nullable="false" />
+          <Property Name="Users_studentNo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="studentNo" />
+          </Key>
+          <Property Name="studentNo" Type="int" Nullable="false" />
+          <Property Name="fName" Type="nchar" MaxLength="20" />
+          <Property Name="lName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isBlacklisted" Type="bit" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="totalrating" Type="int" Nullable="false" />
+          <Property Name="ratingcount" Type="int" Nullable="false" />
+          <Property Name="blacklistReason" Type="nvarchar(max)" />
+          <Property Name="appealed" Type="bit" />
+          <Property Name="appealReason" Type="nvarchar(max)" />
+          <Property Name="reported" Type="bit" />
+          <Property Name="reportReason" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_BookListings_Module1">
+          <End Role="Modules" Type="Self.Modules" Multiplicity="1" />
+          <End Role="BookListings" Type="Self.BookListings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="moduleKey" />
+            </Principal>
+            <Dependent Role="BookListings">
+              <PropertyRef Name="moduleKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookListings_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="BookListings" Type="Self.BookListings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="studentNo" />
+            </Principal>
+            <Dependent Role="BookListings">
+              <PropertyRef Name="studentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDepartments_Departments">
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="UserDepartments" Type="Self.UserDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="departmentID" />
+            </Principal>
+            <Dependent Role="UserDepartments">
+              <PropertyRef Name="Departments_departmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDepartments_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserDepartments" Type="Self.UserDepartments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="studentNo" />
+            </Principal>
+            <Dependent Role="UserDepartments">
+              <PropertyRef Name="Users_studentNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookKeeperModelStoreContainer">
+          <EntitySet Name="Admins" EntityType="Self.Admins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BookListings" EntityType="Self.BookListings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDepartments" EntityType="Self.UserDepartments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BookListings_Module1" Association="Self.FK_BookListings_Module1">
+            <End Role="Modules" EntitySet="Modules" />
+            <End Role="BookListings" EntitySet="BookListings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookListings_Users" Association="Self.FK_BookListings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BookListings" EntitySet="BookListings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDepartments_Departments" Association="Self.FK_UserDepartments_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="UserDepartments" EntitySet="UserDepartments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDepartments_Users" Association="Self.FK_UserDepartments_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserDepartments" EntitySet="UserDepartments" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookKeeperModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="userName" />
+          </Key>
+          <Property Name="userName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BookListing">
+          <Key>
+            <PropertyRef Name="listingID" />
+          </Key>
+          <Property Name="listingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="listedPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="soldPrice" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="condition" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="author" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="studentNumber" Type="Int32" Nullable="false" />
+          <Property Name="moduleKey" Type="Int32" Nullable="false" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isSold" Type="Boolean" Nullable="false" />
+          <Property Name="isQuickSell" Type="Boolean" Nullable="false" />
+          <Property Name="perDrop" Type="Single" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="limitedPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Module" Relationship="Self.FK_BookListings_Module1" FromRole="BookListings" ToRole="Modules" />
+          <NavigationProperty Name="User" Relationship="Self.FK_BookListings_Users" FromRole="BookListings" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="departmentID" />
+          </Key>
+          <Property Name="departmentID" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.UserDepartments" FromRole="Departments" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="moduleKey" />
+          </Key>
+          <Property Name="moduleKey" Type="Int32" Nullable="false" />
+          <Property Name="moduleCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BookListings" Relationship="Self.FK_BookListings_Module1" FromRole="Modules" ToRole="BookListings" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="studentNo" />
+          </Key>
+          <Property Name="studentNo" Type="Int32" Nullable="false" />
+          <Property Name="fName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="lName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isBlacklisted" Type="Boolean" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="totalrating" Type="Int32" Nullable="false" />
+          <Property Name="ratingcount" Type="Int32" Nullable="false" />
+          <Property Name="blacklistReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="appealed" Type="Boolean" />
+          <Property Name="appealReason" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="reported" Type="Boolean" />
+          <Property Name="reportReason" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BookListings" Relationship="Self.FK_BookListings_Users" FromRole="Users" ToRole="BookListings" />
+          <NavigationProperty Name="Departments" Relationship="Self.UserDepartments" FromRole="Users" ToRole="Departments" />
+        </EntityType>
+        <Association Name="FK_BookListings_Module1">
+          <End Role="Modules" Type="Self.Module" Multiplicity="1" />
+          <End Role="BookListings" Type="Self.BookListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modules">
+              <PropertyRef Name="moduleKey" />
+            </Principal>
+            <Dependent Role="BookListings">
+              <PropertyRef Name="moduleKey" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BookListings_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="BookListings" Type="Self.BookListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="studentNo" />
+            </Principal>
+            <Dependent Role="BookListings">
+              <PropertyRef Name="studentNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserDepartments">
+          <End Role="Departments" Type="Self.Department" Multiplicity="*" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BookKeeperEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="BookListings" EntityType="Self.BookListing" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="Modules" EntityType="Self.Module" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_BookListings_Module1" Association="Self.FK_BookListings_Module1">
+            <End Role="Modules" EntitySet="Modules" />
+            <End Role="BookListings" EntitySet="BookListings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookListings_Users" Association="Self.FK_BookListings_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="BookListings" EntitySet="BookListings" />
+          </AssociationSet>
+          <AssociationSet Name="UserDepartments" Association="Self.UserDepartments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookKeeperModelStoreContainer" CdmEntityContainer="BookKeeperEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="BookKeeperModel.Admin">
+              <MappingFragment StoreEntitySet="Admins">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BookListings">
+            <EntityTypeMapping TypeName="BookKeeperModel.BookListing">
+              <MappingFragment StoreEntitySet="BookListings">
+                <ScalarProperty Name="listingID" ColumnName="listingID" />
+                <ScalarProperty Name="listedPrice" ColumnName="listedPrice" />
+                <ScalarProperty Name="soldPrice" ColumnName="soldPrice" />
+                <ScalarProperty Name="condition" ColumnName="condition" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="studentNumber" ColumnName="studentNumber" />
+                <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="isSold" ColumnName="isSold" />
+                <ScalarProperty Name="isQuickSell" ColumnName="isQuickSell" />
+                <ScalarProperty Name="perDrop" ColumnName="perDrop" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="limitedPrice" ColumnName="limitedPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="BookKeeperModel.Department">
+              <MappingFragment StoreEntitySet="Departments">
+                <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modules">
+            <EntityTypeMapping TypeName="BookKeeperModel.Module">
+              <MappingFragment StoreEntitySet="Modules">
+                <ScalarProperty Name="moduleKey" ColumnName="moduleKey" />
+                <ScalarProperty Name="moduleCode" ColumnName="moduleCode" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BookKeeperModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="studentNo" ColumnName="studentNo" />
+                <ScalarProperty Name="fName" ColumnName="fName" />
+                <ScalarProperty Name="lName" ColumnName="lName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="isBlacklisted" ColumnName="isBlacklisted" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="totalrating" ColumnName="totalrating" />
+                <ScalarProperty Name="ratingcount" ColumnName="ratingcount" />
+                <ScalarProperty Name="blacklistReason" ColumnName="blacklistReason" />
+                <ScalarProperty Name="appealed" ColumnName="appealed" />
+                <ScalarProperty Name="appealReason" ColumnName="appealReason" />
+                <ScalarProperty Name="reported" ColumnName="reported" />
+                <ScalarProperty Name="reportReason" ColumnName="reportReason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserDepartments" TypeName="BookKeeperModel.UserDepartments" StoreEntitySet="UserDepartments">
+            <EndProperty Name="Departments">
+              <ScalarProperty Name="departmentID" ColumnName="Departments_departmentID" />
+            </EndProperty>
+            <EndProperty Name="Users">
+              <ScalarProperty Name="studentNo" ColumnName="Users_studentNo" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
