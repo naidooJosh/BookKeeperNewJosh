@@ -29,5 +29,7 @@ namespace BookKeeperNewJosh.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<BookKeeperNewJosh.Models.UserSignIn> UserSignIns { get; set; }
     }
 }

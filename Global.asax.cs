@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
 
 namespace BookKeeperNewJosh
 {
@@ -16,6 +19,23 @@ namespace BookKeeperNewJosh
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+        public class Global : HttpApplication
+        {
+            private void Application_AuthenticateRequest(object sender, EventArgs e)
+            {
+                HttpCookie decryptedCookie =
+                    Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+                FormsAuthenticationTicket ticket =
+                    FormsAuthentication.Decrypt(decryptedCookie.Value);
+
+                var identity = new GenericIdentity(ticket.Name);
+                var principal = new GenericPrincipal(identity, null);
+
+                HttpContext.Current.User = principal;
+                Thread.CurrentPrincipal = HttpContext.Current.User;
+            }
         }
     }
 }

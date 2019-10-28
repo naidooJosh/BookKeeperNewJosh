@@ -1,0 +1,91 @@
+﻿@model BookKeeperNewJosh.DAL.User
+
+@{
+    ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>UserDetails</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isBlacklisted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isBlacklisted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.totalrating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.totalrating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ratingcount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ratingcount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.blacklistReason)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.blacklistReason)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.appealed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.appealed)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.studentNo }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

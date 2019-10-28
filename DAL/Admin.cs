@@ -11,9 +11,10 @@ namespace BookKeeperNewJosh.DAL
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
     public partial class Admin
     {
+        [Key]
         public string userName { get; set; }
         public string password { get; set; }
     }
