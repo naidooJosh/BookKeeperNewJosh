@@ -17,10 +17,10 @@ namespace BookKeeperNewJosh.Controllers
         {
             return View();
         }
-        public ActionResult rateUser()
-        {
+       // public ActionResult rateUser()
+      //  {
 
-        }
+        //}
         [HttpGet]
         public ActionResult reportUser(User repUser)
         {
